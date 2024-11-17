@@ -1,15 +1,4 @@
-# Self-hosted AI starter kit
-
-**Self-hosted AI Starter Kit** is an open-source Docker Compose template designed to swiftly initialize a comprehensive local AI and low-code development environment.
-
-![n8n.io - Screenshot](https://raw.githubusercontent.com/n8n-io/self-hosted-ai-starter-kit/main/assets/n8n-demo.gif)
-
-Curated by <https://github.com/n8n-io>, it combines the self-hosted n8n
-platform with a curated list of compatible AI products and components to
-quickly get started with building self-hosted AI workflows.
-
-> [!TIP]
-> [Read the announcement](https://blog.n8n.io/self-hosted-ai/)
+# Self-hosted RAG in Docker
 
 ### What’s included
 
@@ -37,13 +26,6 @@ Engineering world, handles large amounts of data safely.
 
 ## Installation
 
-### Cloning the Repository
-
-```bash
-git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
-cd self-hosted-ai-starter-kit
-```
-
 ### Running n8n using Docker Compose
 
 #### For Nvidia GPU users
@@ -57,29 +39,6 @@ docker compose --profile gpu-nvidia up
 > [!NOTE]
 > If you have not used your Nvidia GPU with Docker before, please follow the
 > [Ollama Docker instructions](https://github.com/ollama/ollama/blob/main/docs/docker.md).
-
-#### For Mac / Apple Silicon users
-
-If you’re using a Mac with an M1 or newer processor, you can't expose your GPU
-to the Docker instance, unfortunately. There are two options in this case:
-
-1. Run the starter kit fully on CPU, like in the section "For everyone else"
-   below
-2. Run Ollama on your Mac for faster inference, and connect to that from the
-   n8n instance
-
-If you want to run Ollama on your mac, check the
-[Ollama homepage](https://ollama.com/)
-for installation instructions, and run the starter kit as follows:
-
-```
-git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
-cd self-hosted-ai-starter-kit
-docker compose up
-```
-
-After you followed the quick start set-up below, change the Ollama credentials
-by using `http://host.docker.internal:11434/` as the host.
 
 #### For everyone else
 
