@@ -1,4 +1,9 @@
 # Self-hosted RAG in Docker
+A RAG system for using a self-hosted LLM solution to understand documents and extract information from them using a chat, or automatisation.
+
+Several workflows are in place.
+
+Based on [The Self-hosted AI Starter Kit](https://github.com/n8n-io/self-hosted-ai-starter-kit) and the n8n workflow in [ai-agents-masterclass](https://github.com/coleam00/ai-agents-masterclass/tree/main/local-ai-packaged)
 
 ### What’s included
 
