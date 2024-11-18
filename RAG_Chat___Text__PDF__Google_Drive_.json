@@ -1,9 +1,9 @@
 {
-  "name": "Local RAG Chat - Text documents",
+  "name": "RAG Chat - Text, PDF (Google Drive)",
   "nodes": [
     {
       "parameters": {},
-      "id": "455a879b-fff6-47f1-b5f4-29e3dabcebe3",
+      "id": "99b30fd7-b36c-44ba-9daa-408585aaaee9",
       "name": "Postgres Chat Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.1,
@@ -13,7 +13,7 @@
       ],
       "credentials": {
         "postgres": {
-          "id": "XZEzDvJkoJQo4RSP",
+          "id": "wNsKNwSA0lH9zZDZ",
           "name": "Postgres account"
         }
       }
@@ -23,7 +23,7 @@
         "model": "llama3.1:latest",
         "options": {}
       },
-      "id": "99013e32-75df-4797-94ed-67fa7e65a844",
+      "id": "c7632a7c-2661-492e-bd6f-aab994818998",
       "name": "Ollama Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
@@ -33,7 +33,7 @@
       ],
       "credentials": {
         "ollamaApi": {
-          "id": "tVHPtY3ST4YoHPKk",
+          "id": "Aau8u1qIOobuUGJb",
           "name": "Ollama account"
         }
       }
@@ -43,17 +43,17 @@
         "model": "llama3.1:latest",
         "options": {}
       },
-      "id": "1575aedc-b623-478e-aa4d-359ab5f95b57",
+      "id": "73d773a4-5c72-4af3-a52d-144f0e417823",
       "name": "Ollama Model",
       "type": "@n8n/n8n-nodes-langchain.lmOllama",
       "typeVersion": 1,
       "position": [
-        1960,
+        2000,
         500
       ],
       "credentials": {
         "ollamaApi": {
-          "id": "tVHPtY3ST4YoHPKk",
+          "id": "Aau8u1qIOobuUGJb",
           "name": "Ollama account"
         }
       }
@@ -63,12 +63,12 @@
         "name": "documents",
         "topK": 3
       },
-      "id": "f458e33a-44fd-4df4-9d46-c44f63acba14",
+      "id": "3f882fa7-c8ed-4531-b236-a34c16c55838",
       "name": "Vector Store Tool",
       "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
       "typeVersion": 1,
       "position": [
-        1740,
+        1780,
         340
       ]
     },
@@ -76,17 +76,17 @@
       "parameters": {
         "model": "nomic-embed-text:latest"
       },
-      "id": "4b61938c-09c7-4666-81d3-3ab9c15db7be",
+      "id": "3a8e3fa0-3997-4bce-985c-975fb5ad4013",
       "name": "Embeddings Ollama",
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        1840,
+        1880,
         600
       ],
       "credentials": {
         "ollamaApi": {
-          "id": "tVHPtY3ST4YoHPKk",
+          "id": "Aau8u1qIOobuUGJb",
           "name": "Ollama account"
         }
       }
@@ -109,19 +109,21 @@
           "cachedResultUrl": "https://drive.google.com/drive/folders/1dr48iOVhbnTDwOjx8wOXsMAEhCrEbJD7"
         },
         "event": "fileCreated",
-        "options": {}
+        "options": {
+          "fileType": "all"
+        }
       },
-      "id": "0c300d14-b894-49d9-9550-08439cdbcabd",
+      "id": "41fb71dd-236a-48bc-9761-5841d52ca1b3",
       "name": "File Created",
       "type": "n8n-nodes-base.googleDriveTrigger",
       "typeVersion": 1,
       "position": [
-        600,
-        880
+        580,
+        860
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
-          "id": "KAlGjmVVppzNlBjH",
+          "id": "T0jhAwh6Nt2BoIV8",
           "name": "Google Drive account"
         }
       }
@@ -146,17 +148,17 @@
         "event": "fileUpdated",
         "options": {}
       },
-      "id": "b3a6fb08-973b-4414-bd40-f53395cfe047",
+      "id": "7b904686-89ae-4722-9ce5-a9da1b13b1a1",
       "name": "File Updated",
       "type": "n8n-nodes-base.googleDriveTrigger",
       "typeVersion": 1,
       "position": [
-        600,
-        1100
+        580,
+        1360
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
-          "id": "KAlGjmVVppzNlBjH",
+          "id": "T0jhAwh6Nt2BoIV8",
           "name": "Google Drive account"
         }
       }
@@ -176,18 +178,24 @@
               "name": "folder_id",
               "value": "={{ $json.parents[0] }}",
               "type": "string"
+            },
+            {
+              "id": "d5bc933a-65e3-4551-85a3-d5f2db896dfb",
+              "name": "file_type",
+              "value": "={{ $json.mimeType}}",
+              "type": "string"
             }
           ]
         },
         "options": {}
       },
-      "id": "7da3ae81-a6f4-4dc3-b91e-9fd40bcd3571",
+      "id": "87f8bbb0-92c5-4b25-be63-7a9d91fc46f8",
       "name": "Set File ID",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        860,
-        880
+        740,
+        1120
       ]
     },
     {
@@ -206,74 +214,60 @@
           }
         }
       },
-      "id": "3aba4117-150e-489a-a7f7-0575cfbb0b17",
+      "id": "9f1e08fb-4ef3-4c4d-9473-5a7a1608b8e3",
       "name": "Download File",
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1300,
-        880
+        1100,
+        1120
       ],
       "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
-          "id": "KAlGjmVVppzNlBjH",
+          "id": "T0jhAwh6Nt2BoIV8",
           "name": "Google Drive account"
         }
       }
     },
     {
       "parameters": {
-        "operation": "text",
-        "options": {}
-      },
-      "id": "b889d29c-3a46-40dc-aacf-13a54c5a3899",
-      "name": "Extract Document Text",
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        1540,
-        880
-      ],
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.data || $json.text}}",
         "options": {
           "metadata": {
             "metadataValues": [
               {
                 "name": "file_id",
-                "value": "={{ $('Set File ID').item.json.file_id }}"
+                "value": "={{ $('Set File ID').first().json.file_id }}"
               },
               {
                 "name": "folder_id",
-                "value": "={{ $('Set File ID').item.json.folder_id }}"
+                "value": "={{ $('Set File ID').first().json.folder_id }}"
               }
             ]
           }
         }
       },
-      "id": "0d47a639-f6f6-4611-9377-3c0aa3ee65bb",
+      "id": "da4c8b29-4944-43c4-9df3-e380366c594a",
       "name": "Default Data Loader",
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
       "position": [
-        1860,
-        1100
+        2100,
+        1160
       ]
     },
     {
       "parameters": {
-        "chunkSize": 100,
         "options": {}
       },
-      "id": "8d07abd0-f072-494a-8c1b-dfca7473ba9d",
+      "id": "d11c39b9-3fa7-4d5d-838f-da0d258c67c5",
       "name": "Recursive Character Text Splitter",
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        1860,
+        2100,
         1320
       ]
     },
@@ -281,17 +275,17 @@
       "parameters": {
         "model": "nomic-embed-text:latest"
       },
-      "id": "9624b517-141b-4f81-9fdb-152762017063",
+      "id": "8a04559c-dfe8-479f-8998-a2e9bc994a0a",
       "name": "Embeddings Ollama1",
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        1700,
-        1100
+        1940,
+        1160
       ],
       "credentials": {
         "ollamaApi": {
-          "id": "tVHPtY3ST4YoHPKk",
+          "id": "Aau8u1qIOobuUGJb",
           "name": "Ollama account"
         }
       }
@@ -300,9 +294,10 @@
       "parameters": {
         "content": "## Local RAG AI Agent with Chat Interface",
         "height": 527.3027193303974,
-        "width": 969.0343804425795
+        "width": 969.0343804425795,
+        "color": 3
       },
-      "id": "9e8c4dc5-efdc-417b-b3b1-d329719cd8a3",
+      "id": "a18773ae-1eb3-46b8-91cf-4184c66cf14f",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -316,38 +311,38 @@
         "content": "## Agent Tools for Local RAG",
         "height": 528.85546469693,
         "width": 583.4552380860637,
-        "color": 4
+        "color": 5
       },
-      "id": "77d39c86-ae7a-43f6-807b-d969f8174586",
+      "id": "fa010a11-3dda-4bd5-b261-463a3a6b88d9",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1540,
+        1580,
         220
       ]
     },
     {
       "parameters": {
-        "content": "## Workflow to Create Local Knowledgebase from Google Drive Folder",
+        "content": "## Knowledge base from Google Drive Folder worfklow",
         "height": 705.2695614889159,
-        "width": 1568.9362829025763,
-        "color": 5
+        "width": 1806.1855455795555,
+        "color": 7
       },
-      "id": "43586378-b666-4a54-aa6b-1c2bef17b238",
+      "id": "f29e6cc7-015e-47cb-a4fd-fecd6ffb0d24",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
         560,
-        760
+        800
       ]
     },
     {
       "parameters": {
         "options": {}
       },
-      "id": "63ca4160-cff7-4299-bb78-7ca4de93b132",
+      "id": "5da52326-dfbd-4350-919c-843461f58913",
       "name": "When chat message received",
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.1,
@@ -355,46 +350,13 @@
         620,
         340
       ],
-      "webhookId": "df981ad7-7689-443d-8bd0-a69951fd3bd3"
-    },
-    {
-      "parameters": {
-        "code": {
-          "execute": {
-            "code": "const { QdrantVectorStore } = require(\"@langchain/qdrant\");\nconst { OllamaEmbeddings } = require(\"@langchain/community/embeddings/ollama\");\n\nconst embeddings = new OllamaEmbeddings({\n  model: \"nomic-embed-text\",\n  baseUrl: \"http://ollama:11434\"\n});\n\nconst vectorStore = await QdrantVectorStore.fromExistingCollection(\n  embeddings,\n  {\n    url: \"http://qdrant:6333\",\n    collectionName: \"documents\",\n  }\n);\n\nconst fileIdToDelete = this.getInputData()[0].json.file_id;\n\nconst filter = {\n        must: [\n            {\n                key: \"metadata.file_id\",\n                match: {\n                    value: fileIdToDelete,\n                },\n            },\n        ],\n    }\n\n// const results = await vectorStore.similaritySearch(\"this\", 10, filter);\n// const idsToDelete = results.map((doc) => doc.id);\n\n// NOT IMPLEMENTED!\n// await vectorStore.delete({ ids: idsToDelete });\n\nvectorStore.client.delete(\"documents\", {\n  filter\n});\n\nreturn [ {json: { file_id: fileIdToDelete } } ];\n"
-          }
-        },
-        "inputs": {
-          "input": [
-            {
-              "type": "main",
-              "required": true
-            }
-          ]
-        },
-        "outputs": {
-          "output": [
-            {
-              "type": "main"
-            }
-          ]
-        }
-      },
-      "id": "803c57eb-e017-4e8a-8e96-75b005634ee3",
-      "name": "Clear Old Vectors",
-      "type": "@n8n/n8n-nodes-langchain.code",
-      "typeVersion": 1,
-      "position": [
-        1080,
-        880
-      ],
-      "alwaysOutputData": false
+      "webhookId": "4b3b1838-d6b3-447e-9d79-d0931eddb9f8"
     },
     {
       "parameters": {
         "options": {}
       },
-      "id": "25b5e2ef-ee67-4442-b11e-6cad9e1df39a",
+      "id": "e537544a-37d5-4b00-b5ff-bc71f041f4bb",
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
@@ -405,26 +367,9 @@
     },
     {
       "parameters": {
-        "httpMethod": "POST",
-        "path": "0d91cee9-d027-4fff-b1c9-a3e5d2ecae65",
-        "responseMode": "responseNode",
         "options": {}
       },
-      "id": "9eff5919-1b9a-42d5-8801-6547c9d978e2",
-      "name": "Webhook",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        620,
-        520
-      ],
-      "webhookId": "0d91cee9-d027-4fff-b1c9-a3e5d2ecae65"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "29146581-2eb6-4bcc-9e41-02212c7b499a",
+      "id": "c9dfe906-178b-4375-8bda-f9290f35f222",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.6,
@@ -453,7 +398,7 @@
         },
         "options": {}
       },
-      "id": "79f3aa65-1e41-4b10-a2d2-bd8aae118577",
+      "id": "8f974a15-aa2f-4525-8278-ad58ad296076",
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -461,6 +406,140 @@
         820,
         340
       ]
+    },
+    {
+      "parameters": {
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "id": "355370e0-2174-4e5b-830b-dd0f123b2e40",
+      "name": "Qdrant Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        480
+      ],
+      "credentials": {
+        "qdrantApi": {
+          "id": "0DRCqukMtWy6DuWx",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6ff1e715-1ff1-4414-8615-f9921899251c",
+                    "leftValue": "={{ $('Set File ID').item.json.file_type }}",
+                    "rightValue": "application/vnd.google-apps.document",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2c8483d5-386a-4946-92b0-705907bc90a3",
+                    "leftValue": "={{ $('Set File ID').item.json.file_type }}",
+                    "rightValue": "application/pdf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "809545f3-da18-48e1-b30a-456d4eace2fe",
+      "name": "File type switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1280,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "10a44452-698e-4ac5-b06f-e89cf119bfe0",
+      "name": "PDF",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        1060
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "invoke_n8n_agent",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "2b8cd01f-30a8-4aab-b0dd-56d2b658f059",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        620,
+        520
+      ],
+      "webhookId": "4a839da9-b8a2-45f8-bcaf-c484f9a5912d"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "id": "7efee822-68ad-4fe2-a616-ba19fd127684",
+      "name": "Documents",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        880
+      ],
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -473,45 +552,53 @@
         },
         "options": {}
       },
-      "id": "ed34f5ef-a858-47df-9c60-78ae9825920b",
+      "id": "97ec4618-c0ea-445b-9406-5d41784d7836",
       "name": "Qdrant Vector Store Insert",
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1,
       "position": [
-        1760,
-        880
+        2000,
+        940
       ],
       "credentials": {
         "qdrantApi": {
-          "id": "hUsLuT8vo62RFAtn",
+          "id": "0DRCqukMtWy6DuWx",
           "name": "QdrantApi account"
         }
       }
     },
     {
       "parameters": {
-        "qdrantCollection": {
-          "__rl": true,
-          "value": "documents",
-          "mode": "list",
-          "cachedResultName": "documents"
+        "code": {
+          "execute": {
+            "code": "// javascript code to delete vectors that are now to be updated\nconst { QdrantVectorStore } = require(\"@langchain/qdrant\");\nconst { OllamaEmbeddings } = require(\"@langchain/community/embeddings/ollama\");\n\nconst embeddings = new OllamaEmbeddings({\n  model: \"nomic-embed-text\",\n  baseUrl: \"http://ollama:11434\"\n});\n\nconst vectorStore = await QdrantVectorStore.fromExistingCollection(\n  embeddings,\n  {\n    url: \"http://qdrant:6333\",\n    collectionName: \"documents\",\n  }\n);\n\nconst fileIdToDelete = this.getInputData()[0].json.file_id;\n\nconst filter = {\n        must: [\n            {\n                key: \"metadata.file_id\",\n                match: {\n                    value: fileIdToDelete,\n                },\n            },\n        ],\n    }\n\n// const results = await vectorStore.similaritySearch(\"this\", 10, filter);\n// const idsToDelete = results.map((doc) => doc.id);\n\n// NOT IMPLEMENTED!\n// await vectorStore.delete({ ids: idsToDelete });\n\nvectorStore.client.delete(\"documents\", {\n  filter\n});\n\nreturn [ {json: { file_id: fileIdToDelete } } ];\n"
+          }
         },
-        "options": {}
+        "inputs": {
+          "input": [
+            {
+              "type": "main",
+              "required": true
+            }
+          ]
+        },
+        "outputs": {
+          "output": [
+            {
+              "type": "main"
+            }
+          ]
+        }
       },
-      "id": "46427f1b-8e58-4402-9110-8041dfb5ed52",
-      "name": "Qdrant Vector Store",
-      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "id": "b93bd001-0c4d-42fe-939a-eb441f354917",
+      "name": "Delete vectors in vector DB",
+      "type": "@n8n/n8n-nodes-langchain.code",
       "typeVersion": 1,
       "position": [
-        1560,
-        480
+        920,
+        1120
       ],
-      "credentials": {
-        "qdrantApi": {
-          "id": "hUsLuT8vo62RFAtn",
-          "name": "QdrantApi account"
-        }
-      }
+      "alwaysOutputData": false
     }
   ],
   "pinData": {},
@@ -586,7 +673,7 @@
       "main": [
         [
           {
-            "node": "Clear Old Vectors",
+            "node": "Delete vectors in vector DB",
             "type": "main",
             "index": 0
           }
@@ -597,18 +684,7 @@
       "main": [
         [
           {
-            "node": "Extract Document Text",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract Document Text": {
-      "main": [
-        [
-          {
-            "node": "Qdrant Vector Store Insert",
+            "node": "File type switch",
             "type": "main",
             "index": 0
           }
@@ -649,28 +725,6 @@
       ]
     },
     "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Clear Old Vectors": {
-      "main": [
-        [
-          {
-            "node": "Download File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Webhook": {
       "main": [
         [
           {
@@ -724,17 +778,79 @@
           }
         ]
       ]
+    },
+    "File type switch": {
+      "main": [
+        [
+          {
+            "node": "Documents",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDF": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store Insert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Documents": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store Insert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete vectors in vector DB": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "688e25d6-fa3e-452f-a545-cdaf3e66721d",
+  "versionId": "efec153b-d7bd-425c-9599-1fe6431ac96c",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "558d88703fb65b2d0e44613bc35916258b0f0bf983c5d4730c00c424b77ca36a"
+    "instanceId": "3fc6ccfa4bc1f9d35063ee0557481e8700a1c0f7540927ea61a39c1fc5baa847"
   },
-  "id": "5R6tXINJTpahybiL",
+  "id": "vTN9y2dLXqTiDfPT",
   "tags": []
 }

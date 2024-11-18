@@ -1,0 +1,825 @@
+{
+  "name": "RAG Chat - Text, PDF (local)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "dc0216a7-6f76-4b0b-b794-2dafb5194475",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        560
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "wNsKNwSA0lH9zZDZ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {}
+      },
+      "id": "3c4d5ae0-0201-426e-957a-e9cea8065310",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        920,
+        560
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "Aau8u1qIOobuUGJb",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {}
+      },
+      "id": "2514bb93-eaef-4a6c-a84c-819cb81c081c",
+      "name": "Ollama Model",
+      "type": "@n8n/n8n-nodes-langchain.lmOllama",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        500
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "Aau8u1qIOobuUGJb",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "documents",
+        "topK": 5
+      },
+      "id": "fcb1f5a7-2a80-4700-b719-777f42948d4e",
+      "name": "Vector Store Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "id": "4e5ceafe-4e6c-4bfd-8fe0-e291e15512e6",
+      "name": "Embeddings Ollama",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        600
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "Aau8u1qIOobuUGJb",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.data}}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "project",
+                "value": "={{ $('Settings').item.json.project }}"
+              },
+              {
+                "name": "filename",
+                "value": "={{ $('Settings').item.json.filename }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "d2bdd174-5d17-4917-9798-4404575de3f8",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        1160
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c7ae6610-7694-4bbb-818b-e29aee504ed0",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1820,
+        1320
+      ]
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "id": "326e1e3e-ee39-457e-a48d-5e680d49ef9d",
+      "name": "Embeddings Ollama1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        1160
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "Aau8u1qIOobuUGJb",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Local RAG AI Agent with Chat Interface",
+        "height": 527.3027193303974,
+        "width": 969.0343804425795,
+        "color": 3
+      },
+      "id": "085943a8-5387-42ee-b5e5-35ba5fa90e54",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        560,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Agent Tools for Local RAG",
+        "height": 528.85546469693,
+        "width": 583.4552380860637,
+        "color": 5
+      },
+      "id": "e5b0307c-146c-494a-8ee9-6bd1815b5724",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "872dda3d-2999-40bd-a7a1-6d7937f134b2",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        620,
+        340
+      ],
+      "webhookId": "2e08128c-d36b-4770-93b1-19109ba5232c"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a9033a31-8f26-4ea7-9637-a09b656e5bb6",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1340,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "75ebfdef-c8e2-4c3e-b716-1479d0cc2a73",
+              "name": "chatInput",
+              "value": "={{ $json?.chatInput || $json.body.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "59b7a20f-0626-4861-93e2-015d430c266e",
+              "name": "sessionId",
+              "value": "={{ $json?.sessionId || $json.body.sessionId}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2684c8e7-cf48-46cb-8899-b48a6db70246",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        820,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "4533b056-7e92-48f7-b041-844b0444da34",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "9cd40c32-ce62-4754-9950-5b1aa5f45619",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        620,
+        520
+      ],
+      "webhookId": "4533b056-7e92-48f7-b041-844b0444da34"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "eeb74202-b5bd-430a-a717-34fa383f39ed",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1000,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "triggerOn": "folder",
+        "path": "/files/invoices",
+        "events": [
+          "add"
+        ],
+        "options": {
+          "followSymlinks": true,
+          "usePolling": true
+        }
+      },
+      "id": "9f77769d-9c02-4f98-99b0-41f7a4ddf062",
+      "name": "Local File Trigger",
+      "type": "n8n-nodes-base.localFileTrigger",
+      "position": [
+        640,
+        974
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "da64ffde-1e8f-478d-baea-59fc05e6d3ce",
+              "name": "data",
+              "type": "string",
+              "value": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9c55b9b5-e78c-4591-8939-e224bd5542cf",
+      "name": "Prep Incoming Doc",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1400,
+        1134
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "df327b01-961c-4a49-8455-58c3fbff111a",
+              "name": "project",
+              "type": "string",
+              "value": "={{ $json.path.split('/').slice(0, 4)[2] }}"
+            },
+            {
+              "id": "6b7d26f9-3a38-417e-85d0-4e9d42476465",
+              "name": "path",
+              "type": "string",
+              "value": "={{ $json.path }}"
+            },
+            {
+              "id": "bb4471c7-d894-4739-99a6-4be247794ffa",
+              "name": "filename",
+              "type": "string",
+              "value": "={{ $json.path.split('/').last() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9db56767-f178-4ac2-b069-485cad364dc5",
+      "name": "Settings",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        820,
+        974
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "fb39ba7b-43f0-43ab-b4ff-bf444bdfd242",
+      "name": "Extract from PDF",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        1180,
+        974
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "ods",
+        "options": {}
+      },
+      "id": "c55b1841-3f0b-4e40-b0e0-dd38101a782e",
+      "name": "Extract from DOCX",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        1180,
+        1134
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "id": "d28110aa-9e8d-44c7-a02a-ab8287fff196",
+      "name": "Extract from TEXT",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        1180,
+        1294
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Watch Folder and Import New Documents\nTODO: when file is changed, update VDB",
+        "height": 694.0931000693263,
+        "width": 1603.653208622292,
+        "color": 7
+      },
+      "id": "a92f4ea7-5c2b-493a-a2db-6c2278802440",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        800
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.fileType }}",
+                    "rightValue": "pdf"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "pdf"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "3a5f509d-46fe-490c-95f0-35124873c63e",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.fileType }}",
+                    "rightValue": "docx"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "docx"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "75188d2f-4bea-44ea-a579-9b9a1bd1ea93",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $json }}",
+                    "rightValue": ""
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "everything else"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "28bde7b9-9780-4ef0-9094-068991e22155",
+      "name": "Get FileType",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        980,
+        1134
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.path }}",
+        "options": {}
+      },
+      "id": "2875b16c-a10f-47c4-9e2c-36fc4925beea",
+      "name": "Read/Write Files from Disk",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        660,
+        1160
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "id": "2d4008e0-e03d-4dbe-928a-f3bf18319e06",
+      "name": "Qdrant Vector Store Insert",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        940
+      ],
+      "credentials": {
+        "qdrantApi": {
+          "id": "0DRCqukMtWy6DuWx",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "id": "62dc5cbe-d2b2-4aec-ae0f-cbc29f473a5f",
+      "name": "Qdrant Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        480
+      ],
+      "credentials": {
+        "qdrantApi": {
+          "id": "0DRCqukMtWy6DuWx",
+          "name": "QdrantApi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store Insert",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store Insert",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Local File Trigger": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from PDF": {
+      "main": [
+        [
+          {
+            "node": "Prep Incoming Doc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from DOCX": {
+      "main": [
+        [
+          {
+            "node": "Prep Incoming Doc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from TEXT": {
+      "main": [
+        [
+          {
+            "node": "Prep Incoming Doc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prep Incoming Doc": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store Insert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get FileType": {
+      "main": [
+        [
+          {
+            "node": "Extract from PDF",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from DOCX",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from TEXT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Get FileType",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fd0d8e8c-8f38-4c0b-a1e9-e66275e9c882",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3fc6ccfa4bc1f9d35063ee0557481e8700a1c0f7540927ea61a39c1fc5baa847"
+  },
+  "id": "LP1R4zzMaJwaUZoU",
+  "tags": []
+}

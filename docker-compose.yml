@@ -85,7 +85,8 @@ services:
     volumes:
       - n8n_storage:/home/node/.n8n
       - ./n8n/backup:/backup
-      - ./data:/data/shared
+      #- ./data:/data/shared
+      - ./data:/files
     depends_on:
       postgres:
         condition: service_healthy
