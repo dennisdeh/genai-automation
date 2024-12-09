@@ -6,10 +6,16 @@ volumes:
 
 networks:
   vn:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 178.1.1.0/24  # Define the subnet for the network
 
 x-n8n: &service-n8n
   image: n8nio/n8n:latest
-  networks: ['vn']
+  networks:
+    vn:
+      ipv4_address: 178.1.1.100
   environment:
     - DB_TYPE=postgresdb
     - DB_POSTGRESDB_HOST=postgres
@@ -25,32 +31,83 @@ x-n8n: &service-n8n
 x-ollama: &service-ollama
   image: ollama/ollama:latest
   container_name: ollama
-  networks: ['vn']
+  networks:
+    vn:
+      ipv4_address: 178.1.1.101
   restart: unless-stopped
   ports:
-    - 11434:11434
+    - ${OLLAMA_PORT_HOST}:${OLLAMA_PORT_CONT}
   volumes:
     - ollama_storage:/root/.ollama
 
 x-init-ollama: &init-ollama
   image: ollama/ollama:latest
-  networks: ['vn']
   container_name: ollama-pull-llama
+  networks:
+    vn:
+      ipv4_address: 178.1.1.102
   volumes:
     - ollama_storage:/root/.ollama
   entrypoint: /bin/sh
   command:
     - "-c"
-    - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull llama3.2; OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text"
+    - "sleep 3; OLLAMA_HOST=ollama:${OLLAMA_PORT_CONT} ollama pull llama3.2; OLLAMA_HOST=ollama:${OLLAMA_PORT_CONT} ollama pull nomic-embed-text"
 
 services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
+    command:
+      - --max_allowed_packet=107374182400  # 100GB
+      - --max_connections=20000
+      - --innodb_buffer_pool_size=256M
+    networks:
+      vn:
+        ipv4_address: 178.1.1.110
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    ports:
+      - ${MARIADB_PORT_HOST}:${MARIADB_PORT_CONT}
+    volumes:
+      # bind-mount the sql files that should be run while initialising
+      - ./init:/docker-entrypoint-initdb.d
+    healthcheck:  # define health-check that service is ready
+      interval: 2s
+      retries: 20
+      test:
+        [
+          "CMD",
+          "healthcheck.sh",
+          "--su-mysql",
+          "--connect",
+          "--innodb_initialized"
+        ]
+      timeout: 30s
+  # administration
+  adminer:
+    container_name: adminer_rag
+    image: adminer:latest
+    networks:
+      vn:
+        ipv4_address: 178.1.1.120
+    environment:
+      ADMINER_DEFAULT_SERVER: mariadb
+    restart: always
+    ports:
+      - ${ADMINER_PORT_HOST}:${ADMINER_PORT_CONT}
+
   postgres:
     image: postgres:16-alpine
-    networks: ['vn']
+    networks:
+      vn:
+        ipv4_address: 178.1.1.111
     container_name: postgres
     restart: unless-stopped
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT_HOST}:${POSTGRES_PORT_CONT}
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
@@ -81,7 +138,7 @@ services:
     container_name: n8n
     restart: unless-stopped
     ports:
-      - 5678:5678
+      - ${N8N_PORT_HOST}:${N8N_PORT_CONT}
     volumes:
       - n8n_storage:/home/node/.n8n
       - ./n8n/backup:/backup
@@ -96,10 +153,12 @@ services:
   qdrant:
     image: qdrant/qdrant:latest
     container_name: qdrant
-    networks: ['vn']
+    networks:
+      vn:
+        ipv4_address: 178.1.1.112
     restart: unless-stopped
     ports:
-      - 6333:6333
+      - ${QDRANT_PORT_HOST}:${QDRANT_PORT_CONT}
     volumes:
       - qdrant_storage:/qdrant/storage
 
