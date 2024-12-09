@@ -1,15 +1,15 @@
 {
-  "name": "RAG Chat - Text, PDF (local)",
+  "name": "Automated RAG - Text, PDF (local)",
   "nodes": [
     {
       "parameters": {},
-      "id": "dc0216a7-6f76-4b0b-b794-2dafb5194475",
+      "id": "690cd0d1-2daa-4077-b533-49ec22cd6fe6",
       "name": "Postgres Chat Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.1,
       "position": [
-        1160,
-        560
+        960,
+        620
       ],
       "credentials": {
         "postgres": {
@@ -21,15 +21,17 @@
     {
       "parameters": {
         "model": "llama3.1:8b",
-        "options": {}
+        "options": {
+          "format": "json"
+        }
       },
-      "id": "3c4d5ae0-0201-426e-957a-e9cea8065310",
+      "id": "f1624bbf-7188-4315-9f82-53324cfb83b0",
       "name": "Ollama Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        960,
-        560
+        700,
+        620
       ],
       "credentials": {
         "ollamaApi": {
@@ -43,7 +45,7 @@
         "model": "llama3.1:8b",
         "options": {}
       },
-      "id": "2514bb93-eaef-4a6c-a84c-819cb81c081c",
+      "id": "b4fd7953-3cdf-4e88-87d8-cfbacd234953",
       "name": "Ollama Model",
       "type": "@n8n/n8n-nodes-langchain.lmOllama",
       "typeVersion": 1,
@@ -63,7 +65,7 @@
         "name": "documents",
         "topK": 5
       },
-      "id": "fcb1f5a7-2a80-4700-b719-777f42948d4e",
+      "id": "a4606e74-f8c2-4deb-a81f-d2a887807327",
       "name": "Vector Store Tool",
       "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
       "typeVersion": 1,
@@ -76,13 +78,13 @@
       "parameters": {
         "model": "nomic-embed-text:latest"
       },
-      "id": "4e5ceafe-4e6c-4bfd-8fe0-e291e15512e6",
+      "id": "21d2efd2-762c-43e3-b0ba-f7dfbc9236e8",
       "name": "Embeddings Ollama",
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        1680,
-        600
+        1640,
+        620
       ],
       "credentials": {
         "ollamaApi": {
@@ -110,39 +112,39 @@
           }
         }
       },
-      "id": "d2bdd174-5d17-4917-9798-4404575de3f8",
+      "id": "ca4c3e5f-4147-4df1-9351-86fc58c6e0d2",
       "name": "Default Data Loader",
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
       "position": [
-        1820,
-        1160
+        1520,
+        1120
       ]
     },
     {
       "parameters": {
         "options": {}
       },
-      "id": "c7ae6610-7694-4bbb-818b-e29aee504ed0",
+      "id": "d7fcc66d-0794-4ce2-a43b-80f783f4a903",
       "name": "Recursive Character Text Splitter",
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        1820,
-        1320
+        1520,
+        1280
       ]
     },
     {
       "parameters": {
         "model": "nomic-embed-text:latest"
       },
-      "id": "326e1e3e-ee39-457e-a48d-5e680d49ef9d",
+      "id": "b5895f74-198c-425e-b92e-7406a2af9570",
       "name": "Embeddings Ollama1",
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        1660,
-        1160
+        1360,
+        1120
       ],
       "credentials": {
         "ollamaApi": {
@@ -153,17 +155,17 @@
     },
     {
       "parameters": {
-        "content": "## Local RAG AI Agent with Chat Interface",
-        "height": 527.3027193303974,
-        "width": 969.0343804425795,
+        "content": "## Local RAG AI Agent looping over input questions",
+        "height": 527,
+        "width": 1609,
         "color": 3
       },
-      "id": "085943a8-5387-42ee-b5e5-35ba5fa90e54",
+      "id": "996c55b2-b8f0-4f0f-bb5d-60471044357d",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        560,
+        -80,
         220
       ]
     },
@@ -174,7 +176,7 @@
         "width": 583.4552380860637,
         "color": 5
       },
-      "id": "e5b0307c-146c-494a-8ee9-6bd1815b5724",
+      "id": "d66ca4e7-a7ca-4970-9f3d-fdfcee65ef5e",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -185,62 +187,32 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "id": "a9033a31-8f26-4ea7-9637-a09b656e5bb6",
-      "name": "Respond to Webhook",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [
-        1340,
-        340
-      ]
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "75ebfdef-c8e2-4c3e-b716-1479d0cc2a73",
+              "id": "0fb715e2-9272-4789-bc57-40121b7e8ab5",
               "name": "chatInput",
-              "value": "={{ $json?.chatInput || $json.body.chatInput }}",
+              "value": "={{ $json['Questions:']}}",
               "type": "string"
             },
             {
-              "id": "59b7a20f-0626-4861-93e2-015d430c266e",
+              "id": "a22db31b-6387-40d0-b7db-9353b6061b22",
               "name": "sessionId",
-              "value": "={{ $json?.sessionId || $json.body.sessionId}}",
+              "value": "={{ $json['Questions:'].hash()}}",
               "type": "string"
             }
           ]
         },
         "options": {}
       },
-      "id": "2684c8e7-cf48-46cb-8899-b48a6db70246",
+      "id": "ac5edca2-7d0a-49a9-aa7b-8977130139c3",
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        820,
-        340
+        640,
+        420
       ]
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "4533b056-7e92-48f7-b041-844b0444da34",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "id": "9cd40c32-ce62-4754-9950-5b1aa5f45619",
-      "name": "Webhook",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        620,
-        520
-      ],
-      "webhookId": "4533b056-7e92-48f7-b041-844b0444da34"
     },
     {
       "parameters": {
@@ -254,37 +226,14 @@
           "usePolling": true
         }
       },
-      "id": "9f77769d-9c02-4f98-99b0-41f7a4ddf062",
+      "id": "b884b174-a040-49d2-9fad-2a638f485f5e",
       "name": "Local File Trigger",
       "type": "n8n-nodes-base.localFileTrigger",
       "position": [
-        640,
-        974
+        120,
+        1100
       ],
       "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "da64ffde-1e8f-478d-baea-59fc05e6d3ce",
-              "name": "data",
-              "type": "string",
-              "value": "={{ $json.text }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "9c55b9b5-e78c-4591-8939-e224bd5542cf",
-      "name": "Prep Incoming Doc",
-      "type": "n8n-nodes-base.set",
-      "position": [
-        1400,
-        1134
-      ],
-      "typeVersion": 3.3
     },
     {
       "parameters": {
@@ -312,12 +261,12 @@
         },
         "options": {}
       },
-      "id": "9db56767-f178-4ac2-b069-485cad364dc5",
+      "id": "b86ae234-8937-4978-b79e-d8df8106d2eb",
       "name": "Settings",
       "type": "n8n-nodes-base.set",
       "position": [
-        820,
-        974
+        300,
+        1100
       ],
       "typeVersion": 3.3
     },
@@ -326,12 +275,12 @@
         "operation": "pdf",
         "options": {}
       },
-      "id": "fb39ba7b-43f0-43ab-b4ff-bf444bdfd242",
+      "id": "5f3801cf-fc9f-480d-82df-b6e147052d9e",
       "name": "Extract from PDF",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        1180,
-        974
+        880,
+        940
       ],
       "typeVersion": 1
     },
@@ -340,12 +289,12 @@
         "operation": "ods",
         "options": {}
       },
-      "id": "c55b1841-3f0b-4e40-b0e0-dd38101a782e",
+      "id": "af1d4353-978f-4f92-a671-1b675f9d5178",
       "name": "Extract from DOCX",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        1180,
-        1134
+        880,
+        1100
       ],
       "typeVersion": 1
     },
@@ -354,27 +303,27 @@
         "operation": "text",
         "options": {}
       },
-      "id": "d28110aa-9e8d-44c7-a02a-ab8287fff196",
+      "id": "ee84f9a9-b900-4fc3-9de2-c8a2be160ae0",
       "name": "Extract from TEXT",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
-        1180,
-        1294
+        880,
+        1260
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "content": "## Create Knowledge DB: Import and watch folder for documents\nTODO: when file is changed, update VDB",
-        "height": 694.0931000693263,
-        "width": 1603.653208622292,
+        "content": "## Build Knowledge DB: Import and watch folder for documents\nTODO: when file is changed, update VDB",
+        "height": 694,
+        "width": 2244,
         "color": 7
       },
-      "id": "a92f4ea7-5c2b-493a-a2db-6c2278802440",
+      "id": "04252c40-f017-4095-97ef-d5b567eb7c77",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        560,
+        -80,
         800
       ],
       "typeVersion": 1
@@ -460,12 +409,12 @@
         },
         "options": {}
       },
-      "id": "28bde7b9-9780-4ef0-9094-068991e22155",
+      "id": "6a7ea909-bc09-4b6b-84c1-37e4b7eaa237",
       "name": "Get FileType",
       "type": "n8n-nodes-base.switch",
       "position": [
-        980,
-        1134
+        680,
+        1100
       ],
       "typeVersion": 3
     },
@@ -474,13 +423,13 @@
         "fileSelector": "={{ $json.path }}",
         "options": {}
       },
-      "id": "2875b16c-a10f-47c4-9e2c-36fc4925beea",
+      "id": "fc60e501-f82a-4496-8e7b-773d1bf1fd03",
       "name": "Read/Write Files from Disk",
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        660,
-        1160
+        480,
+        1100
       ],
       "alwaysOutputData": false
     },
@@ -495,13 +444,13 @@
         },
         "options": {}
       },
-      "id": "2d4008e0-e03d-4dbe-928a-f3bf18319e06",
+      "id": "fbb0658c-83b4-47dd-9a69-b5256397cc7b",
       "name": "Qdrant Vector Store Insert",
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1,
       "position": [
-        1720,
-        940
+        1420,
+        900
       ],
       "credentials": {
         "qdrantApi": {
@@ -520,7 +469,7 @@
         },
         "options": {}
       },
-      "id": "62dc5cbe-d2b2-4aec-ae0f-cbc29f473a5f",
+      "id": "024678c3-1df6-45c7-841e-a413046367c7",
       "name": "Qdrant Vector Store",
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1,
@@ -537,30 +486,130 @@
     },
     {
       "parameters": {
-        "options": {}
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an AI assistant specialized in extracting event details from user input and formatting them into a structured JSON output. Your task is to analyze the given input and extract the information.\n\nPlease follow these steps to process the input and generate the required output:\n\n1. Carefully read and analyze the user input.\n2. Extract the following information:\n   - A summary of what is asked about\n   - The concept that is asked about\n   - Quantity associated with the concept\n3. Prepare a JSON object with the following structure:\n   {\n    \"summary\": \"one sentence summary of what is asked about\",\n    \"concept\": \"the concept asked about in the input question\",\n    \"quantity\": \"the total number associated with the concept across all retrieved items\"\n   }\n\nEnsure that your output is a valid JSON object, not a string, and that it exactly matches the structure specified in the schema. Do not include any additional properties or formatting."
+        }
       },
-      "id": "eeb74202-b5bd-430a-a717-34fa383f39ed",
+      "id": "fbbd189a-5955-49b4-a39f-c92b79f918a6",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.6,
       "position": [
-        1000,
-        340
+        800,
+        420
       ]
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "binaryPropertyName": "={{ $json}}",
+        "options": {
+          "fileName": "answers",
+          "headerRow": true
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        240
+      ],
+      "id": "3c0cd799-a82a-46c3-b46f-cca9b28ed3b3",
+      "name": "Convert to File",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Input string\nconst inputString = $input.item.json.output;\n\n// Parsing the string to a JSON object\ntry {\n  const jsonObject = JSON.parse(inputString);\n  console.log(\"Parsed JSON Object:\", jsonObject);\n\n  // Optional: Return the JSON object\n  return jsonObject;\n} catch (error) {\n  console.error(\"Error parsing JSON:\", error.message);\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        420
+      ],
+      "id": "665fde8f-93be-46a5-8045-2a24dadbbc09",
+      "name": "Parse output",
+      "alwaysOutputData": true
     },
     {
       "parameters": {
         "options": {}
       },
-      "id": "872dda3d-2999-40bd-a7a1-6d7937f134b2",
-      "name": "When chat message received",
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
       "position": [
-        620,
-        340
+        440,
+        300
       ],
-      "webhookId": "2e08128c-d36b-4770-93b1-19109ba5232c"
+      "id": "d63d6cfb-a0c6-4b41-8dd5-77f5be2820ef",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {
+          "headerRow": true
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        260,
+        300
+      ],
+      "id": "5cdf2c47-b3d8-4e81-a3ae-4ad46169ad27",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/files/questions.xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ],
+      "id": "8f03a058-462b-47d1-907f-9b006de71dc9",
+      "name": "Read questions"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        300
+      ],
+      "id": "aad04ffc-403e-4950-a0ad-37e6a4a5803d",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "da64ffde-1e8f-478d-baea-59fc05e6d3ce",
+              "name": "data",
+              "type": "string",
+              "value": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "59c8c183-9df4-429f-b11d-6559e9183c94",
+      "name": "Extract text",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1100,
+        1100
+      ],
+      "typeVersion": 3.3
     }
   ],
   "pinData": {},
@@ -653,17 +702,6 @@
         ]
       ]
     },
-    "Webhook": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Local File Trigger": {
       "main": [
         [
@@ -690,7 +728,7 @@
       "main": [
         [
           {
-            "node": "Prep Incoming Doc",
+            "node": "Extract text",
             "type": "main",
             "index": 0
           }
@@ -701,7 +739,7 @@
       "main": [
         [
           {
-            "node": "Prep Incoming Doc",
+            "node": "Extract text",
             "type": "main",
             "index": 0
           }
@@ -712,18 +750,7 @@
       "main": [
         [
           {
-            "node": "Prep Incoming Doc",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prep Incoming Doc": {
-      "main": [
-        [
-          {
-            "node": "Qdrant Vector Store Insert",
+            "node": "Extract text",
             "type": "main",
             "index": 0
           }
@@ -792,18 +819,85 @@
       "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "Parse output",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "When chat message received": {
+    "Convert to File": {
+      "main": [
+        []
+      ]
+    },
+    "Parse output": {
       "main": [
         [
           {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
             "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read questions": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract text": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store Insert",
             "type": "main",
             "index": 0
           }
@@ -815,11 +909,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "aee93a87-dbe0-4796-b791-100d7d4ce821",
+  "versionId": "273a6155-b4aa-44c4-85bf-f30c8030075a",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3fc6ccfa4bc1f9d35063ee0557481e8700a1c0f7540927ea61a39c1fc5baa847"
   },
-  "id": "LP1R4zzMaJwaUZoU",
+  "id": "KmotjWK8XzCnFKZQ",
   "tags": []
 }
